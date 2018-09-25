@@ -223,11 +223,15 @@ public:
     const std::string& last_sql() {
         return _sql;
     }
+    void setEndWithSemicolon(bool b) {
+        _end_with_semicolon = b;
+    }
 private:
     SqlModel(const SqlModel& m) = delete;
     SqlModel& operator =(const SqlModel& data) = delete;
 protected:
     std::string _sql;
+    bool _end_with_semicolon = true;
 };
 
 class SelectModel : public SqlModel
@@ -385,6 +389,8 @@ public:
             sql.append(" offset ");
             sql.append(_offset);
         }
+        if(_end_with_semicolon)
+            sql.append(";");
         _sql = std::move(sql);
         return _sql;
     }
@@ -468,6 +474,8 @@ public:
             }
         }
         sql.append(v_ss);
+        if(_end_with_semicolon)
+            sql.append(";");
         _sql = std::move(sql);
         return _sql;
     }
@@ -564,6 +572,8 @@ public:
                 }
             }
         }
+        if(_end_with_semicolon)
+            sql.append(";");
         _sql = std::move(sql);
         return _sql;
     }
@@ -652,6 +662,8 @@ public:
                 }
             }
         }
+        if(_end_with_semicolon)
+            sql.append(";");
         _sql = std::move(sql);
         return _sql;
     }
