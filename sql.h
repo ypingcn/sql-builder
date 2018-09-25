@@ -8,12 +8,12 @@
 namespace sql {
 
 template <typename T>
-std::string to_value(const T& data) {
+inline std::string to_value(const T& data) {
     return std::to_string(data);
 }
 
 template <size_t N>
-std::string to_value(char const(&data)[N]) {
+inline std::string to_value(char const(&data)[N]) {
     std::string str("'");
     str.append(data);
     str.append("'");
@@ -21,7 +21,7 @@ std::string to_value(char const(&data)[N]) {
 }
 
 template <>
-std::string to_value<std::string>(const std::string& data) {
+inline std::string to_value<std::string>(const std::string& data) {
     std::string str("'");
     str.append(data);
     str.append("'");
@@ -29,7 +29,7 @@ std::string to_value<std::string>(const std::string& data) {
 }
 
 template <>
-std::string to_value<const char*>(const char* const& data) {
+inline std::string to_value<const char*>(const char* const& data) {
     std::string str("'");
     str.append(data);
     str.append("'");
