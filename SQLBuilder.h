@@ -1,11 +1,11 @@
-#ifndef _SQL_H_
-#define _SQL_H_
+#ifndef _SQLBUILDER_H_
+#define _SQLBUILDER_H_
 
 #include <vector>
 #include <string>
 #include <map>
 
-namespace sql {
+namespace sqlbuilder {
 
 template <typename T>
 inline std::string to_value(const T& data) {
