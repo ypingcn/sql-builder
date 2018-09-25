@@ -320,6 +320,10 @@ public:
     }
 
     virtual const std::string& str() override {
+        if( _table_name.empty() || _select_columns.empty()) {
+            _sql.clear();
+            return _sql;
+        }
         _sql.clear();
         _sql.append("select ");
         size_t size = _select_columns.size();
@@ -438,6 +442,10 @@ public:
     }
 
     virtual const std::string& str() override {
+        if(_table_name.empty() || _columns.empty() || _values.empty() || _columns.size() != _values.size() ) {
+            _sql.clear();
+            return _sql;
+        }
         _sql.clear();
         std::string v_ss;
         _sql.append("insert into ");
@@ -525,6 +533,10 @@ public:
     }
 
     virtual const std::string& str() override {
+        if(_table_name.empty() || _set_columns.empty() ) {
+            _sql.clear();
+            return _sql;
+        }
         _sql.clear();
         _sql.append("update ");
         _sql.append(_table_name);
@@ -618,6 +630,10 @@ public:
     }
 
     virtual const std::string& str() override {
+        if(_table_name.empty()) {
+            _sql.clear();
+            return _sql;
+        }
         _sql.clear();
         _sql.append("delete from ");
         _sql.append(_table_name);
