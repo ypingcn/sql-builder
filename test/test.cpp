@@ -1,7 +1,7 @@
 #include <iostream>
 #include <sstream>
 
-#include "sql.h"
+#include "SQLBuilder.h"
 
 /*
 
@@ -17,7 +17,7 @@ create table if not exists user (
 
 */
 
-using namespace sql;
+using namespace sqlbuilder;
 
 int main() 
 {
