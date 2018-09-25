@@ -324,67 +324,68 @@ public:
             _sql.clear();
             return _sql;
         }
-        _sql.clear();
-        _sql.append("select ");
+        std::string sql;
+        sql.append("select ");
         size_t size = _select_columns.size();
         for(size_t i = 0; i < size; ++i) {
             if(i < size - 1) {
-                _sql.append(_select_columns[i]);
-                _sql.append(", ");
+                sql.append(_select_columns[i]);
+                sql.append(", ");
             } else {
-                _sql.append(_select_columns[i]);
+                sql.append(_select_columns[i]);
             }
         }
-        _sql.append(" from ");
-        _sql.append(_table_name);
+        sql.append(" from ");
+        sql.append(_table_name);
         size = _where_condition.size();
         if(size > 0) {
-            _sql.append(" where ");
+            sql.append(" where ");
             for(size_t i = 0; i < size; ++i) {
                 if(i < size - 1) {
-                    _sql.append(_where_condition[i]);
-                    _sql.append(" ");
+                    sql.append(_where_condition[i]);
+                    sql.append(" ");
                 } else {
-                    _sql.append(_where_condition[i]);
+                    sql.append(_where_condition[i]);
                 }
             }
         }
         size = _groupby_columns.size();
         if(!_groupby_columns.empty()) {
-            _sql.append(" group by ");
+            sql.append(" group by ");
             for(size_t i = 0; i < size; ++i) {
                 if(i < size - 1) {
-                    _sql.append(_groupby_columns[i]);
-                    _sql.append(", ");
+                    sql.append(_groupby_columns[i]);
+                    sql.append(", ");
                 } else {
-                    _sql.append(_groupby_columns[i]);
+                    sql.append(_groupby_columns[i]);
                 }
             }
         }
         size = _having_condition.size();
         if(size > 0) {
-            _sql.append(" having ");
+            sql.append(" having ");
             for(size_t i = 0; i < size; ++i) {
                 if(i < size - 1) {
-                    _sql.append(_having_condition[i]);
-                    _sql.append(" ");
+                    sql.append(_having_condition[i]);
+                    sql.append(" ");
                 } else {
-                    _sql.append(_having_condition[i]);
+                    sql.append(_having_condition[i]);
                 }
             }
         }
         if(!_order_by.empty()) {
-            _sql.append(" order by ");
-            _sql.append(_order_by);
+            sql.append(" order by ");
+            sql.append(_order_by);
         }
         if(!_limit.empty()) {
-            _sql.append(" limit ");
-            _sql.append(_limit);
+            sql.append(" limit ");
+            sql.append(_limit);
         }
         if(!_offset.empty()) {
-            _sql.append(" offset ");
-            _sql.append(_offset);
+            sql.append(" offset ");
+            sql.append(_offset);
         }
+        _sql = std::move(sql);
         return _sql;
     }
 
@@ -446,27 +447,28 @@ public:
             _sql.clear();
             return _sql;
         }
-        _sql.clear();
+        std::string sql;
         std::string v_ss;
-        _sql.append("insert into ");
-        _sql.append(_table_name);
-        _sql.append("(");
+        sql.append("insert into ");
+        sql.append(_table_name);
+        sql.append("(");
         v_ss.append(" values(");
         size_t size = _columns.size();
         for(size_t i = 0; i < size; ++i) {
             if(i < size - 1) {
-                _sql.append(_columns[i]);
-                _sql.append(", ");
+                sql.append(_columns[i]);
+                sql.append(", ");
                 v_ss.append(_values[i]);
                 v_ss.append(", ");
             } else {
-                _sql.append(_columns[i]);
-                _sql.append(")");
+                sql.append(_columns[i]);
+                sql.append(")");
                 v_ss.append(_values[i]);
                 v_ss.append(")");
             }
         }
-        _sql.append(v_ss);
+        sql.append(v_ss);
+        _sql = std::move(sql);
         return _sql;
     }
 
@@ -537,31 +539,32 @@ public:
             _sql.clear();
             return _sql;
         }
-        _sql.clear();
-        _sql.append("update ");
-        _sql.append(_table_name);
-        _sql.append(" set ");
+        std::string sql;
+        sql.append("update ");
+        sql.append(_table_name);
+        sql.append(" set ");
         size_t size = _set_columns.size();
         for(size_t i = 0; i < size; ++i) {
             if(i < size - 1) {
-                _sql.append(_set_columns[i]);
-                _sql.append(", ");
+                sql.append(_set_columns[i]);
+                sql.append(", ");
             } else {
-                _sql.append(_set_columns[i]);
+                sql.append(_set_columns[i]);
             }
         }
         size = _where_condition.size();
         if(size > 0) {
-            _sql.append(" where ");
+            sql.append(" where ");
             for(size_t i = 0; i < size; ++i) {
                 if(i < size - 1) {
-                    _sql.append(_where_condition[i]);
-                    _sql.append(" ");
+                    sql.append(_where_condition[i]);
+                    sql.append(" ");
                 } else {
-                    _sql.append(_where_condition[i]);
+                    sql.append(_where_condition[i]);
                 }
             }
         }
+        _sql = std::move(sql);
         return _sql;
     }
 
@@ -634,21 +637,22 @@ public:
             _sql.clear();
             return _sql;
         }
-        _sql.clear();
-        _sql.append("delete from ");
-        _sql.append(_table_name);
+        std::string sql;
+        sql.append("delete from ");
+        sql.append(_table_name);
         size_t size = _where_condition.size();
         if(size > 0) {
-            _sql.append(" where ");
+            sql.append(" where ");
             for(size_t i = 0; i < size; ++i) {
                 if(i < size - 1) {
-                    _sql.append(_where_condition[i]);
-                    _sql.append(" ");
+                    sql.append(_where_condition[i]);
+                    sql.append(" ");
                 } else {
-                    _sql.append(_where_condition[i]);
+                    sql.append(_where_condition[i]);
                 }
             }
         }
+        _sql = std::move(sql);
         return _sql;
     }
 
