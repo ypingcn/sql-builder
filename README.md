@@ -16,8 +16,11 @@
         ("address", "beijing")
         ("create_time", nullptr)
         .into("user");
+    std::cout<<i<<std::endl;
     std::cout<<i.str()<<std::endl;
     // insert into user(score, name, age, address, create_time) values(100, 'six', 20, 'beijing', '2016-03-25 10:15:59')
+    std::cout<<i.last_sql()<<std::endl;
+    // faster for the same SQL 
 
     SelectModel s;
     s.select("id", "age", "name", "address")

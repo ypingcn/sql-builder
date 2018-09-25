@@ -18,6 +18,8 @@ create table if not exists user (
 */
 
 using namespace sqlbuilder;
+using std::cout;
+using std::endl;
 
 int main() 
 {
@@ -28,8 +30,13 @@ int main()
         ("address", "beijing")
         ("create_time", nullptr)
         .into("user");
-    std::cout<<i.str()<<std::endl;
+    cout<<i<<endl;
     // insert into user(score, name, age, address, create_time) values(100, 'six', 20, 'beijing', '2016-03-25 10:15:59')
+    cout<<i.str()<<endl;
+    // insert into user(score, name, age, address, create_time) values(100, 'six', 20, 'beijing', '2016-03-25 10:15:59')
+    cout<<i.last_sql()<<endl;
+    // insert into user(score, name, age, address, create_time) values(100, 'six', 20, 'beijing', '2016-03-25 10:15:59')
+    // faster for the same SQL 
 
     SelectModel s;
     s.select("id", "age", "name", "address")
@@ -40,7 +47,7 @@ int main()
         .order_by("age desc")
         .limit(10)
         .offset(1);
-    std::cout<<s<<std::endl;
+    cout<<s<<endl;
     // select id, age, name, address from user where (score > 60) and ((age >= 20) or (address is not null)) group by age having age > 10 order by age desc limit 10 offset 1
 
     std::vector<int> a = {1, 2, 3};
@@ -51,14 +58,14 @@ int main()
         ("score", nullptr)
         ("address", "beijing")
         .where(column("id").in(a));
-    std::cout<<u<<std::endl;
+    cout<<u<<endl;
     // update user set name = 'ddc', age = 18, score = 18, address = 'beijing' where id in (1, 2, 3)
 
     DeleteModel d;
     d._delete()
         .from("user")
         .where(column("id") == 1);
-    std::cout<<d<<std::endl;
+    cout<<d<<endl;
     // delete from user where id = 1
 
     return 0;
