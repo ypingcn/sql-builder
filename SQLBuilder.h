@@ -49,6 +49,60 @@ static std::string sql::to_value<time_t>(const time_t& data) {
 }
 */
 
+class kvpair
+{
+public:
+    kvpair(){}
+    ~kvpair() {}
+    bool setSeperator(const std::string sp = ",") {
+        if(!sp.empty()) {
+            _seperator = sp;
+            return true;
+        }
+        return false;
+    }
+    void reset() {
+        _keys.clear();
+        _values.clear();
+        _seperator = ",";
+        _last_str.clear();
+    }
+    const std::string& str() {
+        if(_keys.empty() || _values.empty() || _keys.size() != _values.size()) {
+            _last_str.clear();
+            return _last_str;
+        }
+        size_t size = _keys.size();
+        std::string str;
+        for(size_t i = 0 ; i < size ; i++) {
+            str.append(_keys[i]);
+            str.append("=");
+            str.append(_values[i]);
+            if(i != size - 1)
+                str.append(_seperator);
+        }
+        _last_str= std::move(str);
+        return _last_str;
+    }
+    template <typename T>
+    kvpair& insert(const std::string& k, const T& v) {
+        _keys.push_back(k);
+        _values.push_back(to_value(v));
+        return *this;
+    }
+
+    template <typename T>
+    kvpair& operator()(const std::string& k, const T& v) {
+        return insert(k, v);
+    }
+
+private:
+    std::vector<std::string> _keys;
+    std::vector<std::string> _values;
+    std::string _seperator = ",";
+    std::string _last_str;
+};
+
 class column
 {
 public:
